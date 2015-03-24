@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NServiceBus.Newtonsoft.Json</name>
+    </assembly>
+    <members>
+        <member name="T:NServiceBus.Newtonsoft.Json.JsonMessageSerializer">
+            <summary>
+            JSON message serializer.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Newtonsoft.Json.JsonMessageSerializer.#ctor(NServiceBus.MessageInterfaces.IMessageMapper)">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Newtonsoft.Json.JsonMessageSerializer.Serialize(System.Object,System.IO.Stream)">
+            <summary>
+            Serializes the given set of messages into the given stream.
+            </summary>
+            <param name="message">Message to serialize.</param>
+            <param name="stream">Stream for <paramref name="message"/> to be serialized into.</param>
+        </member>
+        <member name="M:NServiceBus.Newtonsoft.Json.JsonMessageSerializer.Deserialize(System.IO.Stream,System.Collections.Generic.IList{System.Type})">
+            <summary>
+            Deserializes from the given stream a set of messages.
+            </summary>
+            <param name="stream">Stream that contains messages.</param>
+            <param name="messageTypes">The list of message types to deserialize. If null the types must be inferred from the serialized data.</param>
+            <returns>Deserialized messages.</returns>
+        </member>
+        <member name="P:NServiceBus.Newtonsoft.Json.JsonMessageSerializer.ContentType">
+            <summary>
+            Gets the content type into which this serializer serializes the content to 
+            </summary>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.ReaderCreator(NServiceBus.Serialization.SerializationExtentions{NServiceBus.Newtonsoft.Json.NewtonsoftSerializer},System.Func{System.IO.Stream,Newtonsoft.Json.JsonReader})">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonReader"/> creator of JSON stream.
+            </summary>
+            <param name="config">The configuration object</param>
+            <param name="readerCreator">A delegate that creates a <see cref="T:Newtonsoft.Json.JsonReader"/> for a <see cref="T:System.IO.Stream"/>.</param>
+            <example>
+            var streamReader = new StreamReader(stream, Encoding.UTF8);
+            return new JsonTextReader(streamReader);
+            </example>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.WriterCreator(NServiceBus.Serialization.SerializationExtentions{NServiceBus.Newtonsoft.Json.NewtonsoftSerializer},System.Func{System.IO.Stream,Newtonsoft.Json.JsonWriter})">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonWriter"/> creator of JSON stream.
+            </summary>
+            <param name="config">The configuration object.</param>
+            <param name="writerCreator">A delegate that creates a <see cref="T:Newtonsoft.Json.JsonWriter"/> for a <see cref="T:System.IO.Stream"/>.</param>
+            <example>
+            var streamWriter = new StreamWriter(stream, Encoding.UTF8);
+            return new JsonTextWriter(streamWriter)
+            {
+                Formatting = Formatting.None
+            };
+            </example>
+        </member>
+        <member name="M:NServiceBus.NewtonsoftConfigurationExtensions.Settings(NServiceBus.Serialization.SerializationExtentions{NServiceBus.Newtonsoft.Json.NewtonsoftSerializer},Newtonsoft.Json.JsonSerializerSettings)">
+            <summary>
+            Configures the <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use.
+            </summary>
+            <param name="config">The configuration object.</param>
+            <param name="settings">The <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> to use.</param>
+            <example>
+            new JsonSerializerSettings
+                          {
+                              TypeNameHandling = TypeNameHandling.Auto,
+                              Converters =
+                              {
+                                  new IsoDateTimeConverter
+                                  {
+                                      DateTimeStyles = DateTimeStyles.RoundtripKind
+                                  }
+                              }
+                          }
+            </example>
+        </member>
+        <member name="T:NServiceBus.Newtonsoft.Json.NewtonsoftSerialization">
+            <summary>
+            Uses JSON as the message serialization.
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Newtonsoft.Json.NewtonsoftSerialization.Setup(NServiceBus.Features.FeatureConfigurationContext)">
+            <summary>
+            See <see cref="M:NServiceBus.Features.Feature.Setup(NServiceBus.Features.FeatureConfigurationContext)"/>
+            </summary>
+        </member>
+        <member name="T:NServiceBus.Newtonsoft.Json.NewtonsoftSerializer">
+            <summary>
+            Defines the capabilities of the JSON serializer
+            </summary>
+        </member>
+        <member name="M:NServiceBus.Newtonsoft.Json.NewtonsoftSerializer.ProvidedByFeature">
+            <summary>
+            <see cref="M:NServiceBus.Serialization.SerializationDefinition.ProvidedByFeature"/>
+            </summary>
+        </member>
+    </members>
+</doc>
