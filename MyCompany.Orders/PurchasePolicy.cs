@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MyCompany.Messages.Events;
 using MyCompany.Orders.Data;
@@ -67,6 +68,11 @@ namespace MyCompany.Orders
         #region Private Methods
         private double CalculateDiscount()
         {
+            if (Data.Orders == null)
+            {
+                Data.Orders = new List<Order>();
+            }
+
             if (Data.CustomerIsPreferred)
             {
                 // total of orders for preferred timespan
