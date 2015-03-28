@@ -12,6 +12,8 @@ namespace MyCompany.Orders.Data
 
         public bool CustomerIsPreferred { get; set; }
 
+        public bool OrderCancelled { get; set; }
+
         public double Balance { get; set; }
     }
 }

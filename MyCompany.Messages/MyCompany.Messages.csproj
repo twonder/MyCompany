@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\SubmitOrder.cs" />
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="Events\MoneyAddedToAccount.cs" />
     <Compile Include="Events\OrderAccepted.cs" />

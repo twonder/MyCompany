@@ -55,7 +55,7 @@ namespace MyCompany.Application
                                 o.Amount = Convert.ToDouble(pieces[2]);
                             });
 
-                            Console.WriteLine("===> Order Accepted");
+                            Console.WriteLine("===> Order Submitted");
 
                             break;
                         case "DepositMoney":
@@ -72,7 +72,7 @@ namespace MyCompany.Application
 
                             break;
                         default:
-
+                            Console.WriteLine("===> Unrecognized Action");
                             continue;
                             break;
                     }
@@ -83,6 +83,7 @@ namespace MyCompany.Application
                 }
 
                 Console.WriteLine("==========================================================================");
+                PrintInstructions();
             }
         }
 
@@ -90,8 +91,8 @@ namespace MyCompany.Application
         {
             Console.WriteLine("Here are the list of actions you can run:");
             Console.WriteLine("Login:customerId");
-            Console.WriteLine("CreateOrder:productId:amount");
-            Console.WriteLine("DepositMoney:amount");
+            Console.WriteLine("CreateOrder:productId:amount (assumes prior login)");
+            Console.WriteLine("DepositMoney:amount (assumes prior login)");
         }
     }
 }

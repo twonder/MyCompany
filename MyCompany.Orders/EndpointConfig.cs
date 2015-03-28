@@ -10,7 +10,7 @@ namespace MyCompany.Orders
             configuration.UseSerialization<XmlSerializer>();
 
             // does not work with RavenDB 3+, make sure to download 2.5* 
-            configuration.UsePersistence<RavenDBPersistence>();
+            configuration.UsePersistence<RavenDBPersistence>().DoNotSetupDatabasePermissions();
 
             configuration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Messages"));
             configuration.Conventions().DefiningEventsAs(e => e.Namespace != null & e.Namespace.EndsWith("Events"));
