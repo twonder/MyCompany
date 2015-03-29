@@ -9,8 +9,11 @@ namespace MyCompany.Orders
         {
             configuration.UseSerialization<XmlSerializer>();
 
-            // does not work with RavenDB 3+, make sure to download 2.5* 
-            configuration.UsePersistence<RavenDBPersistence>().DoNotSetupDatabasePermissions();
+            configuration.UsePersistence<NHibernatePersistence, StorageType.Sagas>();
+            configuration.UsePersistence<NHibernatePersistence, StorageType.Subscriptions>();
+            configuration.UsePersistence<NHibernatePersistence, StorageType.Timeouts>();
+            configuration.UsePersistence<NHibernatePersistence, StorageType.Outbox>();
+            configuration.UsePersistence<NHibernatePersistence, StorageType.GatewayDeduplication>();
 
             configuration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Messages"));
             configuration.Conventions().DefiningEventsAs(e => e.Namespace != null & e.Namespace.EndsWith("Events"));
