@@ -10,7 +10,7 @@ using Order = MyCompany.Orders.Data.Order;
 namespace MyCompany.Orders
 {
     public class PurchasePolicy : Saga<PurchasePolicyData>,
-        IAmStartedByMessages<SubmitOrder>,
+        IAmStartedByMessages<OrderAccepted>,
         IAmStartedByMessages<MoneyAddedToAccount>
     {
         private double DiscountTotalThreshold = 100;
@@ -18,7 +18,7 @@ namespace MyCompany.Orders
         protected override void ConfigureHowToFindSaga(SagaPropertyMapper<PurchasePolicyData> mapper)
         {
             // they key to the policy is customerId
-            mapper.ConfigureMapping<SubmitOrder>(order => order.CustomerId)
+            mapper.ConfigureMapping<OrderAccepted>(order => order.CustomerId)
                 .ToSaga(purchasePolicy => purchasePolicy.CustomerId);
             mapper.ConfigureMapping<MoneyAddedToAccount>(order => order.CustomerId)
                 .ToSaga(purchasePolicy => purchasePolicy.CustomerId);
@@ -37,7 +37,7 @@ namespace MyCompany.Orders
             Console.WriteLine("------------------");
         }
 
-        public void Handle(SubmitOrder order)
+        public void Handle(OrderAccepted order)
         {
             Data.CustomerId = order.CustomerId;
             // apply the discount
@@ -108,7 +108,7 @@ namespace MyCompany.Orders
             }
         }
 
-        private void RejectOrder(SubmitOrder order)
+        private void RejectOrder(OrderAccepted order)
         {
             Bus.Publish<OrderRejected>(o =>
             {
