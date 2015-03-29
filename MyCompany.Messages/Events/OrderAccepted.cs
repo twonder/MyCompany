@@ -1,10 +1,7 @@
 ﻿namespace MyCompany.Messages.Events
 {
-    public interface OrderAccepted : IEvent
+    public interface OrderAccepted : IOrder, IEvent
     {
-        string OrderId { get; set; }
-        string CustomerId { get; set; }
-        string ProductId { get; set; }
-        double Amount { get; set; }
+
     }
 }

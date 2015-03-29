@@ -30,6 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Core">
+      <HintPath>..\packages\NServiceBus.5.2.0\lib\net45\NServiceBus.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NServiceBus.Newtonsoft.Json">
+      <HintPath>..\packages\NServiceBus.Newtonsoft.Json.0.1.0\Lib\NET45\NServiceBus.Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,11 +51,16 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\SubmitOrder.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="IOrder.cs" />
     <Compile Include="Events\MoneyAddedToAccount.cs" />
     <Compile Include="Events\OrderAccepted.cs" />
+    <Compile Include="Events\OrderCancelled.cs" />
     <Compile Include="Events\OrderCompleted.cs" />
     <Compile Include="Events\OrderRejected.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,12 +7,15 @@ namespace MyCompany.Orders
     {
         public void Customize(BusConfiguration configuration)
         {
-            configuration.UseSerialization<XmlSerializer>();
+            // using json instead of XML
+            configuration.UseSerialization<JsonSerializer>();
 
-            // does not work with RavenDB 3+, make sure to download 2.5* 
+            // does not work with RavenDB 3+, make sure to download 2.5*
+            // persisting sagas and timeouts to RavenDB
             configuration.UsePersistence<RavenDBPersistence>().DoNotSetupDatabasePermissions();
 
-            configuration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Messages"));
+            // specify what the commands and events can be recognized by
+            configuration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Commands"));
             configuration.Conventions().DefiningEventsAs(e => e.Namespace != null & e.Namespace.EndsWith("Events"));
         }
     }

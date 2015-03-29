@@ -67,6 +67,7 @@
     <Compile Include="Data\PurchasePolicyData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchasePolicy.cs" />
+    <Compile Include="Timeouts\BuyersRemorseTimeout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

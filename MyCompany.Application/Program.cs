@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MyCompany.Messages.Commands;
 using MyCompany.Messages.Events;
 using NServiceBus;
 using NServiceBus.Persistence;
@@ -12,18 +13,25 @@ namespace MyCompany.Application
         static void Main()
         {
             var busConfiguration = new BusConfiguration();
-            busConfiguration.UseSerialization<XmlSerializer>();
+
+            // using json instead of XML
+            busConfiguration.UseSerialization<JsonSerializer>();
+
+            // persisting subscriptions to RavenDB
             busConfiguration.UsePersistence<RavenDBPersistence>();
-            busConfiguration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Messages"));
+
+            // specify what the commands and events can be recognized by
+            busConfiguration.Conventions().DefiningCommandsAs(e => e.Namespace != null & e.Namespace.EndsWith("Commands"));
             busConfiguration.Conventions().DefiningEventsAs(e => e.Namespace != null & e.Namespace.EndsWith("Events"));
+
             var startableBus = Bus.Create(busConfiguration);
             using (var bus = startableBus.Start())
             {
-                Start(bus);
+                RunApplication(bus);
             }
         }
 
-        static void Start(IBus bus)
+        static void RunApplication(IBus bus)
         {
             PrintInstructions();
             var line = "";
@@ -46,16 +54,16 @@ namespace MyCompany.Application
                             break;
                         case "CreateOrder":
                             var orderId = Guid.NewGuid().ToString();
-                            bus.Publish<OrderAccepted>(o =>
+                            bus.Send<SubmitOrder>(o =>
                             {
-                                o.DateOccurred = DateTime.Now;
+                                o.DateSent = DateTime.Now;
                                 o.OrderId = orderId;
                                 o.CustomerId = customerId;
                                 o.ProductId = pieces[1];
                                 o.Amount = Convert.ToDouble(pieces[2]);
                             });
 
-                            Console.WriteLine("===> Order Submitted");
+                            Console.WriteLine("===> Order Submitted: " + orderId);
 
                             break;
                         case "DepositMoney":
@@ -69,6 +77,18 @@ namespace MyCompany.Application
                             });
 
                             Console.WriteLine("===> Money Deposited");
+
+                            break;
+                        case "CancelOrder":
+
+                            bus.Publish<OrderCancelled>(m =>
+                            {
+                                m.DateOccurred = DateTime.Now;
+                                m.OrderId = pieces[1];
+                                m.CustomerId = customerId;
+                            });
+
+                            Console.WriteLine("===> Order Cancelled");
 
                             break;
                         default:
@@ -93,6 +113,9 @@ namespace MyCompany.Application
             Console.WriteLine("Login:customerId");
             Console.WriteLine("CreateOrder:productId:amount (assumes prior login)");
             Console.WriteLine("DepositMoney:amount (assumes prior login)");
+            Console.WriteLine("CancelOrder:orderId");
+            Console.WriteLine("==========================================================================");
+            Console.Write((customerId ?? "NotLoggedIn") + "> ");
         }
     }
 }
