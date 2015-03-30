@@ -4,7 +4,8 @@ namespace MyCompany.Orders.Data
 {
     public class Order
     {
-        public DateTime Date { get; set; }
-        public double Amount { get; set; }
+        public virtual Guid Id { get; set; }
+        public virtual DateTime Date { get; set; }
+        public virtual double Amount { get; set; }
     }
 }

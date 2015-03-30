@@ -1,19 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NServiceBus.Saga;
 
 namespace MyCompany.Orders.Data
 {
     public class PurchasePolicyData : ContainSagaData
     {
+        public virtual Guid Id { get; set; }
+
         [Unique]
-        public string CustomerId { get; set; }
+        public virtual string CustomerId { get; set; }
 
-        public List<Order> Orders { get; set; }
+        public virtual List<Order> Orders { get; set; }
 
-        public bool CustomerIsPreferred { get; set; }
+        public virtual bool CustomerIsPreferred { get; set; }
 
-        public bool OrderCancelled { get; set; }
+        public virtual bool OrderCancelled { get; set; }
 
-        public double Balance { get; set; }
+        public virtual double Balance { get; set; }
     }
 }
